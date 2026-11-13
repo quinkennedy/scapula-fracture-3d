@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Left Scapula Fracture</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 2h7l3 4-4 8H5L3 8z' fill='%23e6dcc4'/%3E%3Cpath d='M6 9l4-2' stroke='%23ff2a1f' stroke-width='1.5'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/viewer.css">
 <script type="importmap">
 { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -21,8 +22,8 @@
     '(e.g. GitHub Pages, or a local web server; see README.md). Opening index.html straight from disk will not work.';
 </script>
 
-<div class="panel">
-  <h1>Left shoulder blade (scapula)</h1>
+<details class="panel" id="controls" open>
+  <summary><h1>Left shoulder blade (scapula)</h1></summary>
   <p><span class="red">Red</span> = oblique, nondisplaced crack through the inferior scapular neck (~16&nbsp;mm long), placed by measurement from your AP X-ray.</p>
   <label><input type="checkbox" id="see-through"> See-through bone (shows the crack surface inside)</label>
   <label><input type="checkbox" id="show-humerus" checked> Show upper arm bone</label>
@@ -39,9 +40,20 @@
     <button data-view="side">Side</button>
     <button data-view="crack">Zoom to crack</button>
   </div>
-  <p class="hint">Drag to rotate · scroll to zoom · right-drag to pan</p>
-</div>
+  <p class="hint mouse">Drag to rotate · scroll to zoom · right-drag to pan</p>
+  <p class="hint touch">Drag to rotate · pinch to zoom · two-finger drag to pan</p>
+</details>
 
-<div class="note">Bone: BodyParts3D left scapula (DBCLS, CC BY-SA 2.1 JP), not your own bone. Crack position, angle and length measured from your AP X-ray; plain X-rays can't show its exact 3D depth, so it is drawn through the full thickness. Upper arm bone and collarbone are simplified stand-ins. X-ray films are positioned approximately, by matching landmarks. Illustration only, not a diagnosis.</div>
+<details class="note" id="about" open>
+  <summary>Illustration only, not a diagnosis</summary>
+  <p>Bone: BodyParts3D left scapula (DBCLS, CC BY-SA 2.1 JP), not your own bone. Crack position, angle and length measured from your AP X-ray; plain X-rays can't show its exact 3D depth, so it is drawn through the full thickness. Upper arm bone and collarbone are simplified stand-ins. X-ray films are positioned approximately, by matching landmarks.</p>
+</details>
+<script>
+  // small screens: start with the controls and the note collapsed so the model is visible
+  if (matchMedia('(max-width: 600px), (max-height: 500px)').matches) {
+    document.getElementById('controls').open = false;
+    document.getElementById('about').open = false;
+  }
+</script>
 </body>
 </html>

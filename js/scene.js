@@ -22,9 +22,15 @@ export function createScene(canvas) {
   rim.position.set(300, -100, -200);
   scene.add(rim);
 
+  // On narrow (portrait) screens, widen the vertical field of view so the horizontal view stays as wide as
+  // on a 0.8-aspect window. Widening the lens instead of moving the camera keeps the X-ray films lined up.
+  const BASE_FOV = 35, MIN_ASPECT = 0.8;
   function resize() {
     renderer.setSize(innerWidth, innerHeight, false);
     camera.aspect = innerWidth / innerHeight;
+    const halfV = THREE.MathUtils.degToRad(BASE_FOV / 2);
+    camera.fov = camera.aspect >= MIN_ASPECT ? BASE_FOV
+      : THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(halfV) * MIN_ASPECT / camera.aspect));
     camera.updateProjectionMatrix();
   }
   addEventListener('resize', resize);

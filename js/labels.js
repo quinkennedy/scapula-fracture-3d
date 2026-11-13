@@ -46,8 +46,19 @@ export function createLabels(camera, parts, annotations, container = document.bo
     }
     const pl = Math.hypot(px, py) || 1; px /= pl; py /= pl;
 
-    const off = 34 + len / 2 + Math.abs(px) * L.el.offsetWidth / 2 + Math.abs(py) * L.el.offsetHeight / 2;
-    const lx = mx + px * off, ly = my + py * off;
+    // Try spots along the perpendicular (away from the bone first, then further out, then the other side)
+    // and take the first that doesn't overlap another label. On small screens the default spot can land on one.
+    const W = L.el.offsetWidth, H = L.el.offsetHeight;
+    const base = 34 + len / 2 + Math.abs(px) * W / 2 + Math.abs(py) * H / 2;
+    const others = labels.filter(o => o !== L && o.el.style.display !== 'none').map(o => o.el.getBoundingClientRect());
+    const hits = (x, y) => others.some(r => x - W / 2 - 4 < r.right && x + W / 2 + 4 > r.left && y - H / 2 - 4 < r.bottom && y + H / 2 + 4 > r.top);
+    let lx, ly;
+    for (const [sgn, k] of [[1, 1], [1, 1.6], [-1, 1], [1, 2.2], [-1, 1.6]]) {
+      const qx = px * sgn, qy = py * sgn;
+      lx = mx + qx * base * k; ly = my + qy * base * k;
+      if (!hits(lx, ly)) { px = qx; py = qy; break; }
+      if (sgn === -1 && k === 1.6) { lx = mx + px * base; ly = my + py * base; }   // nothing free: use the default
+    }
     L.el.style.left = lx + 'px';
     L.el.style.top = ly + 'px';
 
@@ -59,14 +70,16 @@ export function createLabels(camera, parts, annotations, container = document.bo
   }
 
   function update() {
+    let fracture = null;
     for (const L of labels) {
-      if (L.name === 'Fracture') { placeFracture(L); continue; }
+      if (L.name === 'Fracture') { fracture = L; continue; }   // placed last, around the others
       const part = parts[LABEL_PART[L.name]];
       const [x, y, z] = toScreen(L.pos);
       const vis = enabled && z < 1 && !(part && !part.visible);
       L.el.style.display = vis ? '' : 'none';
       if (vis) { L.el.style.left = x + 'px'; L.el.style.top = y + 'px'; }
     }
+    if (fracture) placeFracture(fracture);
   }
 
   return { update, setEnabled: on => { enabled = on; } };

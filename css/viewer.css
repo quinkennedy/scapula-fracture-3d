@@ -19,10 +19,18 @@ html, body {
 #c { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
 
 .panel {
-  position: fixed; top: 16px; left: 16px; max-width: 320px;
+  position: fixed; top: 16px; left: 16px; max-width: 320px; z-index: 2;
   background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+  /* never taller than the screen (leaving room for the note); scroll inside instead */
+  max-height: calc(100dvh - 32px - 2.5em); overflow-y: auto; box-sizing: border-box; overscroll-behavior: contain;
 }
-h1 { font-size: 16px; margin: 0 0 4px; }
+.panel summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 8px; }
+.panel summary::-webkit-details-marker { display: none; }
+.panel summary::after { content: "▾"; margin-left: auto; color: var(--muted); transition: transform .2s; }
+.panel:not([open]) summary::after { transform: rotate(-90deg); }
+.panel:not([open]) { padding-top: 10px; padding-bottom: 10px; }
+h1 { font-size: 16px; margin: 0; }
+.panel[open] summary { margin-bottom: 4px; }
 p { margin: 6px 0; color: var(--muted); }
 .hint { margin-top: 10px; }
 .red { color: var(--red); font-weight: 600; }
@@ -38,17 +46,44 @@ button:hover { background: #353a44; }
 
 /* labels pinned to points on the model */
 .lbl {
-  position: fixed; pointer-events: none; font-size: 12px; padding: 2px 6px; border-radius: 4px;
+  position: fixed; pointer-events: none; z-index: 1; font-size: 12px; padding: 2px 6px; border-radius: 4px;
   background: rgba(0, 0, 0, .6); white-space: nowrap; transform: translate(-50%, -130%);
 }
 .lbl.frac { color: #fff; background: #c0201a; font-weight: 600; transform: translate(-50%, -50%); }
-#leader { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+#leader { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
 #leader line { stroke: #ff4a3f; stroke-width: 1.5; }
 
-.note { position: fixed; bottom: 12px; left: 16px; right: 16px; color: var(--muted); font-size: 12px; }
+.note {
+  position: fixed; bottom: 12px; left: 16px; right: 16px; z-index: 2; color: var(--muted); font-size: 12px;
+  max-height: 40dvh; overflow-y: auto;
+}
+.note summary { cursor: pointer; width: fit-content; }
+.note p { margin: 4px 0 0; }
+.note[open] { background: var(--panel); border-radius: 8px; padding: 8px 10px; margin: 0 -10px -8px; }
+
+/* hints for the input type in use */
+.hint.touch { display: none; }
+@media (pointer: coarse) {
+  .hint.mouse { display: none; }
+  .hint.touch { display: block; }
+}
+
+/* touch screens: finger-sized targets */
+@media (pointer: coarse) {
+  .panel label { min-height: 40px; margin: 2px 0; }
+  .panel input[type=checkbox] { width: 20px; height: 20px; flex: none; }
+  .panel input[type=range] { height: 32px; }
+  button { min-height: 40px; padding: 8px 12px; }
+  .panel summary { min-height: 28px; }
+  .note summary { padding: 6px 0; }
+}
 #status {
   position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
   max-width: 420px; text-align: center; color: var(--muted);
 }
 
-@media (max-width: 600px) { .panel { right: 16px; max-width: none; } }
+@media (max-width: 600px) {
+  .panel { top: 10px; left: 10px; right: 10px; max-width: none; }
+  .note { left: 10px; right: 10px; bottom: 8px; }
+}
+@media (max-height: 500px) { .panel { top: 8px; max-height: calc(100dvh - 16px - 2.5em); } }
