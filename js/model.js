@@ -7,7 +7,8 @@ const GHOST = { color: 0xb8c4d6, transparent: true, opacity: 0.16, depthWrite: f
 const MATERIALS = {
   'Scapula': () => new THREE.MeshStandardMaterial({ color: 0xe6dcc4, roughness: 0.75, metalness: 0 }),
   'Fracture line': () => new THREE.MeshBasicMaterial({ color: 0xff2a1f }),
-  'Fracture surface': () => new THREE.MeshBasicMaterial({ color: 0xff2a1f, side: THREE.DoubleSide, transparent: true, opacity: 0.75 }),
+  // solid and lightly shaded, so the break surface reads as a surface inside the see-through bone
+  'Fracture surface': () => new THREE.MeshStandardMaterial({ color: 0xff3b30, emissive: 0x5a0000, roughness: 0.6, metalness: 0, side: THREE.DoubleSide }),
   'Humerus': () => new THREE.MeshStandardMaterial(GHOST),
   'Clavicle': () => new THREE.MeshStandardMaterial(GHOST),
 };

@@ -9,8 +9,12 @@ export function createViews(camera, controls, annotations) {
   const crack = new THREE.Vector3(...annotations.fracture.midpoint);
   const origin = new THREE.Vector3();
 
+  // Film views: looking along each X-ray's fitted beam direction, so the film lines up behind the bone.
+  const filmView = name => new THREE.Vector3(...annotations.films[name].viewDirection).multiplyScalar(430);
+
   const presets = {
-    xray:  { pos: n.clone().multiplyScalar(430), target: origin },   // face-on to the shoulder blade, like the X-ray
+    xray:  { pos: filmView('ap'), target: origin },
+    axial: { pos: filmView('axial'), target: origin },
     front: { pos: new THREE.Vector3(0, 0, 430), target: origin },
     back:  { pos: new THREE.Vector3(0, 0, -430), target: origin },
     side:  { pos: new THREE.Vector3(430, 30, 120), target: origin },

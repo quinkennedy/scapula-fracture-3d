@@ -15,8 +15,14 @@ The crack's position, angle and length were measured from a plain AP shoulder X-
 | `js/model.js` | Loads the model and annotations; sets each part's look |
 | `js/views.js` | Preset camera views and the orbiting transition between them |
 | `js/labels.js` | Labels pinned to the model, including the fracture label and its leader line |
+| `js/films.js` | X-ray films shown as semi-transparent image panels in front of the bone |
 | `model/shoulder.glb` | 3D geometry: scapula, fracture line, fracture surface, humerus, clavicle |
-| `model/annotations.json` | Label positions, fracture reference points and the scapular plane, in model millimetres |
+| `model/annotations.json` | Label positions, fracture reference points, the scapular plane, and where each X-ray film sits, in model millimetres |
+| `model/xray_ap.jpg`, `model/xray_axial.jpg` | Cropped, contrast-adjusted AP and axial X-ray images (exported without DICOM metadata) |
+
+### How the X-ray films are placed
+
+Each film is a semi-transparent flat panel just in front of the bone, at right angles to that X-ray's beam, so the bone shows through it. The "X-ray opacity" slider sets how see-through the films are. Its position was found by matching landmarks on the film (crack, glenoid rim, humeral head centre, AC joint, acromion, coracoid) to the same points on the model. A search tried every viewing direction, and for each fitted a 2D move, rotation and scale. The direction with the smallest landmark mismatch was kept: about 3–5 mm on the film, and 1–3 mm at the crack. The panel is shrunk slightly so it lines up from the preset camera, which uses perspective. The "AP X-ray angle" and "Axial X-ray angle" buttons look along those fitted beam directions. On the axial film the arm is raised, so the humerus stand-in doesn't match it.
 
 three.js is loaded from the jsDelivr CDN, so there is no build step.
 
@@ -32,7 +38,7 @@ python -c "import http.server as h, mimetypes; mimetypes.add_type('text/javascri
 
 Then open http://localhost:8000/. The `mimetypes` line matters on Windows: plain `python -m http.server` can serve `.js` files as `text/plain`, and browsers refuse to run them.
 
-You can choose the starting view with a URL hash: `#xray`, `#front`, `#back`, `#side` or `#crack`. Add `+see` to start in see-through mode, e.g. `#crack+see`.
+You can choose the starting view with a URL hash: `#xray` (AP film angle), `#axial`, `#front`, `#back`, `#side` or `#crack`. You can add options with `+`: `+see` starts in see-through mode, and `+film-ap` or `+film-axial` shows a film. For example, `#axial+film-axial`.
 
 ## Credits and license
 

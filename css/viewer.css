@@ -27,6 +27,7 @@ p { margin: 6px 0; color: var(--muted); }
 .hint { margin-top: 10px; }
 .red { color: var(--red); font-weight: 600; }
 label { display: flex; gap: 8px; align-items: center; margin: 6px 0; cursor: pointer; }
+label.slider input { flex: 1; min-width: 0; accent-color: var(--muted); }
 
 .btns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 button {

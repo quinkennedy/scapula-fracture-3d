@@ -28,8 +28,12 @@
   <label><input type="checkbox" id="show-humerus" checked> Show upper arm bone</label>
   <label><input type="checkbox" id="show-clavicle" checked> Show collarbone</label>
   <label><input type="checkbox" id="show-labels" checked> Labels</label>
+  <label><input type="checkbox" id="show-film-ap" data-film="ap"> Show AP X-ray</label>
+  <label><input type="checkbox" id="show-film-axial" data-film="axial"> Show axial X-ray</label>
+  <label class="slider">X-ray opacity <input type="range" id="film-opacity" min="0.1" max="1" step="0.05" value="0.55"></label>
   <div class="btns">
-    <button data-view="xray">X-ray angle</button>
+    <button data-view="xray">AP X-ray angle</button>
+    <button data-view="axial">Axial X-ray angle</button>
     <button data-view="front">Front</button>
     <button data-view="back">Back</button>
     <button data-view="side">Side</button>
@@ -38,6 +42,6 @@
   <p class="hint">Drag to rotate · scroll to zoom · right-drag to pan</p>
 </div>
 
-<div class="note">Bone: BodyParts3D left scapula (DBCLS, CC BY-SA 2.1 JP), not your own bone. Crack position, angle and length measured from your AP X-ray; plain X-rays can't show its exact 3D depth, so it is drawn through the full thickness. Upper arm bone and collarbone are simplified stand-ins. Illustration only, not a diagnosis.</div>
+<div class="note">Bone: BodyParts3D left scapula (DBCLS, CC BY-SA 2.1 JP), not your own bone. Crack position, angle and length measured from your AP X-ray; plain X-rays can't show its exact 3D depth, so it is drawn through the full thickness. Upper arm bone and collarbone are simplified stand-ins. X-ray films are positioned approximately, by matching landmarks. Illustration only, not a diagnosis.</div>
 </body>
 </html>
