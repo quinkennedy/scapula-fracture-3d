@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Left Scapula Fracture</title>
+<link rel="stylesheet" href="css/viewer.css">
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+</script>
+<script type="module" src="js/main.js"></script>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="status">Loading 3D model…</div>
+<script>
+  // Browsers won't run module scripts from a page opened straight from disk, so main.js never gets to report this.
+  if (location.protocol === 'file:') document.getElementById('status').textContent =
+    'This page loads its scripts and 3D model as separate files, so it has to be served over HTTP ' +
+    '(e.g. GitHub Pages, or a local web server; see README.md). Opening index.html straight from disk will not work.';
+</script>
+
+<div class="panel">
+  <h1>Left shoulder blade (scapula)</h1>
+  <p><span class="red">Red</span> = oblique, nondisplaced crack through the inferior scapular neck (~16&nbsp;mm long), placed by measurement from your AP X-ray.</p>
+  <label><input type="checkbox" id="see-through"> See-through bone (shows the crack surface inside)</label>
+  <label><input type="checkbox" id="show-humerus" checked> Show upper arm bone</label>
+  <label><input type="checkbox" id="show-clavicle" checked> Show collarbone</label>
+  <label><input type="checkbox" id="show-labels" checked> Labels</label>
+  <div class="btns">
+    <button data-view="xray">X-ray angle</button>
+    <button data-view="front">Front</button>
+    <button data-view="back">Back</button>
+    <button data-view="side">Side</button>
+    <button data-view="crack">Zoom to crack</button>
+  </div>
+  <p class="hint">Drag to rotate · scroll to zoom · right-drag to pan</p>
+</div>
+
+<div class="note">Bone: BodyParts3D left scapula (DBCLS, CC BY-SA 2.1 JP), not your own bone. Crack position, angle and length measured from your AP X-ray; plain X-rays can't show its exact 3D depth, so it is drawn through the full thickness. Upper arm bone and collarbone are simplified stand-ins. Illustration only, not a diagnosis.</div>
+</body>
+</html>
