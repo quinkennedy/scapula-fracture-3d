@@ -12,6 +12,7 @@ A static site with no build step. three.js is loaded from the jsDelivr CDN throu
 | `js/views.js` | Preset camera views and the orbiting transition between them |
 | `js/labels.js` | Labels pinned to the model, including the fracture label and its leader line |
 | `js/films.js` | X-ray films shown as semi-transparent image panels in front of the bone |
+| `js/extension.js` | "Possible unseen extent": a tinted layer on the bone along the routes in `possibleExtension`, fading away from the crack's tip |
 | `model/shoulder.glb` | 3D geometry: scapula, fracture line, fracture surface, humerus, clavicle |
-| `model/annotations.json` | Label positions, fracture reference points, the scapular plane, and where each X-ray film sits, in model millimetres |
+| `model/annotations.json` | Label positions, fracture reference points, the scapular plane, where each X-ray film sits, and the illustrative routes for the possible unseen extent, in model millimetres |
 | `model/xray_ap.jpg`, `model/xray_axial.jpg` | Cropped, contrast-adjusted AP and axial X-ray images (exported without DICOM metadata) |

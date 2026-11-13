@@ -37,6 +37,12 @@ p { margin: 6px 0; color: var(--muted); }
 label { display: flex; gap: 8px; align-items: center; margin: 6px 0; cursor: pointer; }
 label.slider input { flex: 1; min-width: 0; accent-color: var(--muted); }
 
+.legend { margin: 0 0 8px 28px; font-size: 12px; }
+.legend[hidden] { display: none; }
+.legend .ramp { height: 8px; border-radius: 4px; background: linear-gradient(to right, rgba(255, 230, 128, .25), #ffb020, #ff7a00); }
+.legend .ends { display: flex; justify-content: space-between; color: var(--muted); }
+.legend p { margin: 4px 0 0; font-size: 12px; }
+
 .btns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 button {
   background: #2a2e36; color: var(--text); border: 1px solid var(--line); border-radius: 6px;

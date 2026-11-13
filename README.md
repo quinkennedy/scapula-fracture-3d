@@ -26,7 +26,7 @@ The crack's position, angle and length were measured from a plain AP shoulder X-
 
   Then open http://localhost:8000/. The `mimetypes` part matters on Windows: plain `python -m http.server` can serve `.js` files as `text/plain`, and browsers refuse to run them.
 
-You can choose the starting view with a URL hash: `#xray` (AP film angle), `#axial`, `#front`, `#back`, `#side` or `#crack`. You can add options with `+`: `+see` starts in see-through mode, and `+film-ap` or `+film-axial` shows a film. For example, `#axial+film-axial`.
+You can choose the starting view with a URL hash: `#xray` (AP film angle), `#axial`, `#front`, `#back`, `#side` or `#crack`. You can add options with `+`: `+see` starts in see-through mode, `+ext` shows the possible unseen extent of the crack, and `+film-ap` or `+film-axial` shows a film. For example, `#axial+film-axial`.
 
 ## Credits and license
 

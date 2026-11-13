@@ -4,6 +4,7 @@ import { loadModel, setSeeThrough } from './model.js';
 import { createViews } from './views.js';
 import { createLabels } from './labels.js';
 import { createFilms, setFilmOpacity } from './films.js';
+import { createExtension } from './extension.js';
 
 const status = document.getElementById('status');
 const { renderer, scene, camera, controls } = createScene(document.getElementById('c'));
@@ -27,6 +28,12 @@ try {
   bind('show-clavicle', on => { parts['Clavicle'].visible = on; });
   bind('show-labels', on => labels.setEnabled(on));
 
+  // possible unseen extent of the crack (illustrative), with its legend
+  const extension = createExtension(parts['Scapula'], annotations);
+  const extLegend = document.getElementById('ext-legend');
+  const showExtension = on => { extension.visible = on; extLegend.hidden = !on; };
+  const extBox = bind('show-extension', showExtension);
+
   // X-ray films: turning one on also swings the camera round to that film's angle
   const opacitySlider = document.getElementById('film-opacity');
   const films = createFilms(annotations.films, Number(opacitySlider.value));
@@ -43,6 +50,7 @@ try {
   const [view, ...extras] = location.hash.slice(1).split('+');
   views.go(views.has(view) ? view : 'xray', false);
   if (extras.includes('see')) { seeThrough.checked = true; setSeeThrough(parts, true); }
+  if (extras.includes('ext')) { extBox.checked = true; showExtension(true); }
   for (const box of filmBoxes) {
     if (extras.includes('film-' + box.dataset.film)) { box.checked = true; films[box.dataset.film].visible = true; }
   }
